@@ -1,9 +1,18 @@
-import streamlit as st
-import yfinance as yf
-import pandas as pd
-import ta
-import matplotlib.pyplot as plt
+import os
 import joblib
+from train_model import train_and_save_models
+
+# Auto-train if models are missing
+if not os.path.exists("low_model.pkl") or not os.path.exists("high_model.pkl"):
+    print("Model files not found, training models...")
+    train_and_save_models()
+else:
+    print("Model files found, loading...")
+
+# Load trained models
+low_model = joblib.load("low_model.pkl")
+high_model = joblib.load("high_model.pkl")
+
 
 low_model = joblib.load("low_model.pkl")
 high_model = joblib.load("high_model.pkl")
